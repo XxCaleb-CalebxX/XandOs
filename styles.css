@@ -1,0 +1,64 @@
+.board {
+    width: 612px;
+    height: 612px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid black;
+    padding: 100px;
+}
+
+.bttns {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+.pos {
+    height: 200px;
+    width: 200px;
+    text-align: center;
+    font-size: 150px;
+}
+
+#A1 {
+    border-right: 3px solid black;
+    border-bottom: 3px solid black;
+}
+
+#A3 {
+    border-left: 3px solid black;
+    border-bottom: 3px solid black;
+}
+#A2 {
+    border-bottom:3px solid black;
+    border-right: 3px solid black;
+    border-left: 3px solid black;
+}
+
+#B1 {
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black
+}
+
+#B3 {
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    border-left: 3px solid black;
+}
+#B2 {
+    border: 3px solid black;
+}
+
+#C3 {
+    border-left: 3px solid black;
+    border-top: 3px solid black;
+}
+#C2 {
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+    border-top: 3px solid black;
+}
+#C1 {
+    border-right: 3px solid black;
+    border-top: 3px solid black;
+}
