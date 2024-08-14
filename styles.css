@@ -9,8 +9,7 @@
 
 .bttns {
     display: flex;
-    justify-content: center;
-    gap: 100px;
+    gap:600px
 }
 .pos {
     height: 200px;
