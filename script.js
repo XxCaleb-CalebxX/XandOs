@@ -9,14 +9,19 @@ clearbttn.addEventListener('click' , () => {
 })
 
 change.addEventListener('click' , () => {
-    turn = toggle(turn);
     newGame.clear();
     clearBoard();
+    turn = "X"
+    let next_move = computerMove(newGame , turn).getMoves()
+    let next_turn = next_move.at(newGame.getMoves().length)
+
+    let new_thing = document.querySelector(`#${next_turn}`)
+    new_thing.textContent = turn 
+    newGame.play(next_turn , turn);
+    turn = toggle(turn)
 })
 
 board.addEventListener('click' , function(e) {
-    console.log(e.target.id)
-    console.log(newGame.state)
     let thing = document.querySelector(`#${e.target.id}`)
     thing.textContent = turn;
     newGame.play(e.target.id , turn);
@@ -35,7 +40,28 @@ board.addEventListener('click' , function(e) {
         alert('Tie');
     } else {
         turn = toggle(turn)
-    }
+        let next_move = computerMove(newGame , turn).getMoves()
+        let next_turn = next_move.at(newGame.getMoves().length)
+
+        let new_thing = document.querySelector(`#${next_turn}`)
+        new_thing.textContent = turn 
+        newGame.play(next_turn , turn);
+        let new_winner = newGame.checkEnd(); 
+
+        if (new_winner == "X" || new_winner == "O") {
+            turn = "X"
+            newGame.clear()
+            clearBoard()
+            alert("Game has ended, " + winner + " has won!")
+        }
+        else if (newGame.checknoTurns() == true) {
+            turn= "X"
+            newGame.clear()
+            clearBoard()
+            alert('Tie');
+        } else {
+            turn = toggle(turn)
+        } }
 })
 
 function clearBoard() {
@@ -145,10 +171,57 @@ class Game  {
         let res = this.checkEnd()
 
         if (res == "X") return num
-        if (res == "O") return num*-1
+        else if (res == "O") return num*-1
         return 0
     }
 
+}
+
+function computerMove(current_state , current_player) {
+    if (current_state.checkEnd() == "X" || current_state.checkEnd() == "O" || current_state.checknoTurns() == true) {
+        return current_state
+    }
+
+    if (current_player == "X") {
+        let maxEval = -10000
+        let moves = current_state.turns()
+
+        for (let turn of moves) {
+            let temp = new Game(current_state.getState() , current_state.getMoves())
+            temp.play( turn, current_player)
+            let eval = computerMove(temp , toggle(current_player))
+
+            if (typeof maxEval == Game) {
+                if (eval.utility() > maxEval.utility()) {
+                    maxEval = new Game(eval.getState() , eval.getMoves())
+                } }
+            else {
+                    maxEval = new Game(eval.getState() , eval.getMoves())
+                
+                }
+            
+        } return maxEval
+
+    } else {
+        let minEval = 10000;
+        let moves = current_state.turns()
+
+        for (let turn of moves) {
+            let temp = new Game(current_state.getState() , current_state.getMoves())
+            temp.play(turn , current_player)
+            let eval = computerMove(temp , toggle(current_player))
+
+            if (typeof minEval == Game) {
+                if (eval.utility() < minEval.utility()){
+                    minEval = new Game(eval.getState() , eval.getMoves())
+                } } 
+            else {
+                minEval = new Game(eval.getState() , eval.getMoves())
+            }
+
+        } return minEval
+
+    }
 }
 
 const newGame = new Game()
