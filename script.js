@@ -28,10 +28,10 @@ board.addEventListener('click' , function(e) {
     let winner = newGame.checkEnd(); 
 
     if (winner == "X" || winner == "O") {
-        turn = "X"
         newGame.clear()
         clearBoard()
-        alert("Game has ended, " + winner + " has won!")
+        alert("Game has ended, " + turn + " has won!")
+        turn = "X"
     }
     else if (newGame.checknoTurns() == true) {
         turn= "X"
@@ -49,10 +49,10 @@ board.addEventListener('click' , function(e) {
         let new_winner = newGame.checkEnd(); 
 
         if (new_winner == "X" || new_winner == "O") {
-            turn = "X"
             newGame.clear()
             clearBoard()
-            alert("Game has ended, " + winner + " has won!")
+            alert("Game has ended, " + turn + " has won!")
+            turn = "X"
         }
         else if (newGame.checknoTurns() == true) {
             turn= "X"
@@ -191,7 +191,7 @@ function computerMove(current_state , current_player) {
             temp.play( turn, current_player)
             let eval = computerMove(temp , toggle(current_player))
 
-            if (typeof maxEval == Game) {
+            if (typeof maxEval == "object") {
                 if (eval.utility() > maxEval.utility()) {
                     maxEval = new Game(eval.getState() , eval.getMoves())
                 } }
@@ -211,7 +211,7 @@ function computerMove(current_state , current_player) {
             temp.play(turn , current_player)
             let eval = computerMove(temp , toggle(current_player))
 
-            if (typeof minEval == Game) {
+            if (typeof minEval == "object") {
                 if (eval.utility() < minEval.utility()){
                     minEval = new Game(eval.getState() , eval.getMoves())
                 } } 
